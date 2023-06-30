@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -24,12 +24,19 @@ export default function App() {
       setTaskList(data);
     } else {
       setTaskerr("Enter a Item");
+      console.log('hit')
     }
   };
 
-  const delitem = (e) => {
-    console.log(e);
+  const delitem = (id) => {
+      setTaskList((taskList)=>{
+      return taskList.filter((item)=>{ return item.id!== id} )
+    })
   };
+
+  useEffect(()=>{
+
+  },[taskList])
 
   return (
     <View style={styles.container}>
@@ -40,7 +47,7 @@ export default function App() {
           data={taskList}
           renderItem={({ item, index, separators }) => {
             return (
-               <GoalItem data={item} delete ={delitem}/>
+               <GoalItem data={item} deletes={delitem} id={item.id}/>
             );
           }}
           keyExtractor={(item , index)=>{
